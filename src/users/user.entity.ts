@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Note } from 'src/notes/entities/note.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
@@ -13,6 +21,12 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @OneToMany(() => Note, (note) => note.user)
+  notes: Note[];
+
+  @CreateDateColumn()
   createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
