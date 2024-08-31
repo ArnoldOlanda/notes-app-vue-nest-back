@@ -34,6 +34,11 @@ export class NotesController {
     return this.notesService.findAll(id, paginationDto);
   }
 
+  @Get('/category-count/:id')
+  findAllByCategoryWithCount(@Param('id', ParseIntPipe) id: number) {
+    return this.notesService.findAllByCategoryWithCount(id);
+  }
+
   @Get('/find/:id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.notesService.findOne(id);

@@ -6,6 +6,7 @@ import { Note } from './entities/note.entity';
 import { DataSource, Repository } from 'typeorm';
 import { User } from 'src/users/user.entity';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { Category } from 'src/category/entities/category.entity';
 
 @Injectable()
 export class NotesService {
@@ -14,6 +15,8 @@ export class NotesService {
     private readonly noteRepository: Repository<Note>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
     private datasource: DataSource,
   ) {}
 
@@ -56,6 +59,20 @@ export class NotesService {
       take: limit,
       skip: offset,
     });
+  }
+
+  async findAllByCategoryWithCount(id: number) {
+    const queryBuilder = this.categoryRepository
+      .createQueryBuilder('c')
+      .leftJoinAndSelect('c.notes', 'n', 'n.userId = :userId', { userId: id })
+      .select('c.id', 'id')
+      .addSelect('c.name', 'category')
+      .addSelect('COUNT(n.id)', 'count')
+      .groupBy('c.id');
+
+    const result = await queryBuilder.getRawMany();
+
+    return result;
   }
 
   async findOne(id: number) {
