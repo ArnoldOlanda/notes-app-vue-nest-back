@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { NotesModule } from './notes/notes.module';
 import { CommonModule } from './common/common.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { CommonModule } from './common/common.module';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'nestdb',
+      database: 'notes-app',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
@@ -21,6 +22,7 @@ import { CommonModule } from './common/common.module';
     AuthModule,
     NotesModule,
     CommonModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],

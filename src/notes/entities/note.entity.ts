@@ -1,3 +1,4 @@
+import { Category } from 'src/category/entities/category.entity';
 import { User } from 'src/users/user.entity';
 import {
   Column,
@@ -13,6 +14,12 @@ export class Note {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ManyToOne(() => Category, (category) => category.notes)
+  category: string;
+
+  @ManyToOne(() => User, (user) => user.notes)
+  user: User;
+
   @Column('varchar')
   title: string;
 
@@ -21,12 +28,6 @@ export class Note {
 
   @Column()
   date: Date;
-
-  @Column('varchar')
-  category: string;
-
-  @ManyToOne(() => User, (user) => user.notes)
-  user: User;
 
   @CreateDateColumn()
   createdAt: Date;

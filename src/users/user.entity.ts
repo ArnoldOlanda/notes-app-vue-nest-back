@@ -1,3 +1,4 @@
+import { Category } from 'src/category/entities/category.entity';
 import { Note } from 'src/notes/entities/note.entity';
 import {
   Entity,
@@ -23,6 +24,9 @@ export class User {
 
   @OneToMany(() => Note, (note) => note.user)
   notes: Note[];
+
+  @OneToMany(() => Category, (category) => category.user)
+  categories: Category[];
 
   @CreateDateColumn()
   createdAt: Date;

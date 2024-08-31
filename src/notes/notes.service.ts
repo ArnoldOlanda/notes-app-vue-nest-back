@@ -52,6 +52,7 @@ export class NotesService {
     const { limit = 10, offset = 0 } = paginationDto;
     return this.noteRepository.find({
       where: { user: { id } },
+      relations: ['category'],
       take: limit,
       skip: offset,
     });
